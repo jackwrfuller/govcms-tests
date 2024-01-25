@@ -11,6 +11,9 @@
       "name": "Jack Fuller",
       "email": "jack.fuller101@gmail.com"
     }
-  ]
+  ],
+  "installer-paths": {
+    "web/modules/{$name}": ["type:drupal-custom-module"]
+  }
 }
 
