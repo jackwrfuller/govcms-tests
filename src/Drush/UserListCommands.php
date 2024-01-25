@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\user_list\Drush\Commands;
+namespace Drupal\user_list\Drush;
 
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\Core\Utility\Token;
