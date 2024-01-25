@@ -2,5 +2,5 @@
 
 /**
  * @file
- * Install, update and uninstall functions for the User List module.
+ * Install, update and uninstall functions for the Drush User List module.
  */
