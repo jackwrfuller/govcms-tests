@@ -14,15 +14,35 @@ Extends the capability of Drush's 'user' command to include the ability to list 
 
 ## :hammer: Requirements
 
-PHP >=8.0.0 and Drush >=12.0.0
+- PHP >=8.0.0
+- Drush >=12.0.0
 
 ## :building_construction: Installation
 
-<!-- Add what you need here -->
+```bash
+composer require jackwrfuller/drush-user-list
+```
+
+Since this package is considered a Drupal module, you may need to enable the module as well:
+
+```bash
+drush pm:install drush-user-list
+```
 
 ## :thought_balloon: Usage
 
-<!-- Add what you need here -->
+```bash
+drush user:list
+```
+Returns a table with user IDs and usernames for all users in the database. 
+
+Optionally, you can filter the columns using `--field=<column>`, i.e:
+
+```bash
+drush user:list --field=uid
+```
+
+to get just a list of user IDs.
 
 ## :cook: Author
 
