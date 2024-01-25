@@ -1,0 +1,16 @@
+{
+  "name": "jackwrfuller/drush-user-list",
+  "description": "Extends Drush's 'user' command with user:list that list all existing users",
+  "require": {
+    "php": ">=8.0",
+    "drush/drush": "12.*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jack Fuller",
+      "email": "jack.fuller101@gmail.com"
+    }
+  ]
+}
+

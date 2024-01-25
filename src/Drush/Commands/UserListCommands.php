@@ -31,7 +31,7 @@ final class UserListCommands extends DrushCommands {
     }
 
     /**
-     * Command description here.
+     * List all Drupal users.
      */
     #[CLI\Command(name: 'user:list', aliases: ['ul'])]
     //#[CLI\Argument(name: 'arg1', description: 'Argument description.')]
