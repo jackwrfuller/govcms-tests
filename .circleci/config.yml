@@ -1,0 +1,15 @@
+version: '2.1'
+orbs:
+  tests: govcms/tests@dev:first
+jobs:
+  validate-composer:
+    executor: tests/default
+    steps:
+      - run:
+          name: Validate distribution composer.json
+          command: |
+            composer -V
+workflows:
+  test:
+    jobs:
+      - validate-composer
