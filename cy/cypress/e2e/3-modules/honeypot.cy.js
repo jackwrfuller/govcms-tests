@@ -20,6 +20,7 @@ describe('Check Honeypot traps are enabled on webforms', () => {
     it('Check Honeypot completion prevents password reset submission', () => {
         // Enabled logging to ensure honeypot blocking can be checked
         cy.execDrush('pm:install dblog -y')
+        cy.execDrush('pm:list | grep dblog | grep Enabled')
 
         cy.visit('user/password')
         cy.get('[data-drupal-selector="edit-name"]').type('test@example.com')

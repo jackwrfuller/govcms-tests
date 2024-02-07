@@ -9,6 +9,7 @@ describe('User can upload files', () => {
     before('Create test user', () => {
         cy.execDrush(`ucrt ${testUser} --password=password`)
         cy.execDrush(`user:role:add govcms_content_author ${testUser}`)
+        cy.execDrush(`user:information ${testUser} | grep govcms_content_author`)
     })
 
 
