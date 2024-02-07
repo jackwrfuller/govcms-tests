@@ -14,7 +14,13 @@ describe('User can upload files', () => {
 
 
     it('Test audio file upload', () => {
-        cy.drupalLogin(testUser, 'password')
+        //cy.drupalLogin(testUser, 'password')
+        cy.visit(`/user/login`)
+        cy.get("#edit-name").type(testUser)
+        cy.get("#edit-pass").type("password")
+        cy.screenshot()
+        cy.get("#edit-submit").click()
+
         cy.visit('media/add/audio')
         cy.get('[data-drupal-selector="edit-name-0-value"]').type(`${testFileName}`)
         cy.get('[data-drupal-selector="edit-field-media-audio-file-0-upload"]').selectFile('cypress/fixtures/media/audio_test.mp3')
