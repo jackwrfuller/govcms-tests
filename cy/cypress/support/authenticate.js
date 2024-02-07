@@ -15,6 +15,7 @@ Cypress.Commands.add("drupalLogin", (user, password) => {
     cy.visit(`/user/login`)
     cy.get("#edit-name").type(user)
     cy.get("#edit-pass").type(password)
+    cy.screenshot()
     cy.get("#edit-submit").click()
 });
 
