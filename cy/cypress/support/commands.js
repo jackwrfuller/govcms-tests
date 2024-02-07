@@ -31,6 +31,8 @@ Cypress.Commands.add("execDrush", (command) => {
     if (cmd == null) {
         if (Cypress.env('localEnv') === "lando") {
             cmd = 'lando drush %command'
+        } else if (Cypress.env('localEnv') === "local") {
+            cmd = `docker compose exec govcms bash -c \"drush %command\"`
         } else {
             cmd = "$(which drush) %command"
         }
@@ -71,6 +73,8 @@ Cypress.Commands.add("composerCommand", (command) => {
         console.log(Cypress.env())
         if (Cypress.env('localEnv') === "lando") {
             cmd = 'cd ../..; lando composer %command'
+        } else if (Cypress.env('localEnv') === "local") {
+            cmd = `cd ..; composer %command`
         } else {
             cmd = 'cd ../..; composer %command'
         }

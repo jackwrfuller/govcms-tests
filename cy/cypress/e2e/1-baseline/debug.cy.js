@@ -16,7 +16,17 @@ describe('User can upload files', () => {
 
 
     it('Test audio file upload', () => {
-        cy.drupalLogin(testUser, 'password')
+        //cy.drupalLogin(testUser, 'password')
+        cy.execDrush(`user:information ${testUser} | grep govcms_content_author`)
+        // Ensure content authors have ability to upload audio media
+        cy.execDrush(`role:list --filter='rid=govcms_content_author' | grep 'create audio media'`)
+
+        cy.visit(`/user/login`)
+        cy.get("#edit-name").type(testUser)
+        cy.get("#edit-pass").type("password")
+        cy.screenshot()
+        cy.get("#edit-submit").click()
+
         cy.visit('media/add/audio')
         cy.get('[data-drupal-selector="edit-name-0-value"]').type(`${testFileName}`)
         cy.get('[data-drupal-selector="edit-field-media-audio-file-0-upload"]').selectFile('cypress/fixtures/media/audio_test.mp3')
