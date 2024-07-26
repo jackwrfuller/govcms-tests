@@ -33,7 +33,7 @@ services:
     networks:
       - internal
     ports:
-      - "0:80"
+      - "8888:80"
     develop:
       watch:
         - action: sync
@@ -46,6 +46,26 @@ services:
             - data/
         - action: rebuild
           path: composer.json
+
+  ##########################################
+  # sso: The SSO identity provider service
+  ##########################################
+  sso:
+    image: kristophjunge/test-saml-idp
+    container_name: sso
+    environment:
+      SIMPLESAMLPHP_SP_ENTITY_ID: 'http://localhost:8888'
+      SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE: 'http://localhost:8080/simplesaml/module.php/saml/sp/saml2-acs.php/test-sp'
+      SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE: 'http://localhost:8080/simplesaml/module.php/saml/sp/saml2-logout.php/test-sp'
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sso-http.rule=Host(`sso.govcms.localhost`)"
+      - "traefik.http.routers.sso-http.entrypoints=web"
+    networks:
+      - internal
 
 volumes:
   modules:
