@@ -33,7 +33,7 @@ services:
     networks:
       - internal
     ports:
-      - "0:8080"
+      - "0:80"
     develop:
       watch:
         - action: sync

@@ -1,6 +1,7 @@
 # Set the PHP and GovCMS versions as arguments
 ARG PHP_VERSION=8.3
 ARG GOVCMS_VERSION=10.x-latest
+ARG DRUPAL_VERSION=10.2
 
 # Stage 1: Web image
 FROM govcms/govcms:${GOVCMS_VERSION} AS govcms
@@ -29,6 +30,9 @@ WORKDIR /app
 
 # Copy govcms and test files with correct ownership
 COPY --chown=govcms:govcms --from=govcms /app /app
+
+# Add the install.php file from the Drupal repository
+ADD --chown=govcms:govcms https://github.com/drupal/drupal/raw/10.2.x/core/install.php /app/web/core/install.php
 
 # Switch to the govcms user
 USER govcms
