@@ -11,7 +11,7 @@ services:
       # Source code volumes
       - modules:/app/web/modules/develop
       - themes:/app/web/themes/develop
-      - /var/www/html
+      - /app/web/sites/default/files
 
       # Test volumes
       - behat:/app/tests/behat
@@ -23,8 +23,10 @@ services:
 
       # Configuration files
       - ./.docker/config/rector.php:/app/rector.php
+      - ./.docker/sso/config:/app/custom/sso/config
     environment:
       - GOVCMS_ENV=development
+      - SIMPLESAMLPHP_CONFIG_DIR=/app/custom/sso/config
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.govcms.rule=Host(`govcms.localhost`)"
