@@ -53,6 +53,8 @@ RUN set -eux; \
     echo '    Alias /simplesaml /app/vendor/simplesamlphp/simplesamlphp/public' >> /etc/apache2/sites-available/000-default.conf; \
     echo '    <Directory /app/vendor/simplesamlphp/simplesamlphp/public>' >> /etc/apache2/sites-available/000-default.conf; \
     echo '        Require all granted' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '        Options FollowSymLinks' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '        AllowOverride None' >> /etc/apache2/sites-available/000-default.conf; \
     echo '    </Directory>' >> /etc/apache2/sites-available/000-default.conf; \
     echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default.conf
 

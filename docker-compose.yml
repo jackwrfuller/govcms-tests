@@ -57,8 +57,8 @@ services:
     container_name: sso
     environment:
       SIMPLESAMLPHP_SP_ENTITY_ID: 'http://localhost:8888'
-      SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE: 'http://localhost:8080/simplesaml/module.php/saml/sp/saml2-acs.php/test-sp'
-      SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE: 'http://localhost:8080/simplesaml/module.php/saml/sp/saml2-logout.php/test-sp'
+      SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE: 'http://localhost:8888/simplesaml/module.php/saml/sp/saml2-acs.php/test-sp'
+      SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE: 'http://localhost:8888/simplesaml/module.php/saml/sp/saml2-logout.php/test-sp'
     ports:
       - "8080:8080"
       - "8443:8443"

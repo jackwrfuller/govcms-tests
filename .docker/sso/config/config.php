@@ -68,9 +68,9 @@ $config = [
      * root directory.
      */
     'cachedir' => '/tmp/cache/simplesamlphp',
-    //'loggingdir' => '/var/log/',
-    //'datadir' => '/var/data/',
-    //'tempdir' => '/tmp/simplesamlphp',
+    'loggingdir' => '/tmp/log/',
+    'datadir' => '/tmp/data/',
+    'tempdir' => '/tmp/simplesamlphp',
 
     /*
      * Certificate and key material can be loaded from different possible
@@ -90,7 +90,7 @@ $config = [
      * directory. Note that locations with no prefix included will be treated
      * as file locations.
      */
-    'certdir' => 'cert/',
+    'certdir' => '/app/custom/sso/config/cert/',
 
     /* To load a certificate or key from the database, it should be specified
      * as 'pdo://<id>' where <id> is the identifier in the database table that
@@ -173,7 +173,7 @@ $config = [
      *
      * See this page for a list of valid timezones: http://php.net/manual/en/timezones.php
      */
-    'timezone' => null,
+    'timezone' => 'Australia/Sydney',
 
 
 
@@ -189,7 +189,7 @@ $config = [
      * A possible way to generate a random salt is by running the following command from a unix shell:
      * LC_ALL=C tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo
      */
-    'secretsalt' => 'defaultsecretsalt',
+    'secretsalt' => 'r031f6uvkbiy1wg7uwbk2qptbe4po0j5',
 
     /*
      * This password must be kept secret, and modified from the default value 123.
@@ -197,7 +197,7 @@ $config = [
      * metadata listing and diagnostics pages.
      * You can also put a hash here; run "bin/pwgen.php" to generate one.
      */
-    'auth.adminpassword' => '123',
+    'auth.adminpassword' => '123456',
 
     /*
      * Set this option to true if you want to require administrator password to access the metadata.
@@ -232,7 +232,7 @@ $config = [
      * Example:
      *   'trusted.url.domains' => ['sp.example.com', 'app.example.com'],
      */
-    'trusted.url.domains' => [],
+    'trusted.url.domains' => ['govcms.localhost', 'localhost'],
 
     /*
      * Enable regular expression matching of trusted.url.domains.
@@ -321,9 +321,9 @@ $config = [
      * empty array.
      */
     'debug' => [
-        'saml' => false,
+        'saml' => true,
         'backtraces' => true,
-        'validatexml' => false,
+        'validatexml' => true,
     ],
 
     /*
@@ -366,7 +366,7 @@ $config = [
      * loggingdir above to 'null'.
      */
     'logging.level' => SimpleSAML\Logger::NOTICE,
-    'logging.handler' => 'syslog',
+    'logging.handler' => 'stderr',
 
     /*
      * Specify the format of the logs. Its use varies depending on the log handler used (for instance, you cannot
@@ -535,7 +535,7 @@ $config = [
      * one of the functionalities below, but in some cases you could run multiple functionalities.
      * In example when you are setting up a federation bridge.
      */
-    'enable.saml20-idp' => false,
+    'enable.saml20-idp' => true,
     'enable.adfs-idp' => false,
 
 
@@ -557,7 +557,7 @@ $config = [
      */
 
     'module.enable' => [
-        'exampleauth' => false,
+        'exampleauth' => true,
         'core' => true,
         'admin' => true,
         'saml' => true
@@ -630,7 +630,7 @@ $config = [
      *
      * If unset, SimpleSAMLphp will try to automatically determine the right value
      */
-    //'session.cookie.secure' => true,
+    'session.cookie.secure' => FALSE,
 
     /*
      * Set the SameSite attribute in the cookie.
@@ -649,7 +649,7 @@ $config = [
      * Example:
      *  'session.cookie.samesite' => 'None',
      */
-    'session.cookie.samesite' => $httpUtils->canSetSameSiteNone() ? 'None' : null,
+    'session.cookie.samesite' => null,
 
     /*
      * Options to override the default settings for php sessions.
@@ -1065,7 +1065,7 @@ $config = [
      * This option allows you to specify a directory for your metadata outside of the standard metadata directory
      * included in the standard distribution of the software.
      */
-    'metadatadir' => 'metadata',
+    'metadatadir' => '/app/custom/sso/config/metadata',
 
     /*
      * This option configures the metadata sources. The metadata sources is given as an array with
@@ -1193,7 +1193,7 @@ $config = [
      *
      * The default datastore is 'phpsession'.
      */
-    'store.type'                    => 'phpsession',
+    'store.type'                    => 'sql',
 
     /*
      * The DSN the sql datastore should connect to.
@@ -1201,7 +1201,7 @@ $config = [
      * See http://www.php.net/manual/en/pdo.drivers.php for the various
      * syntaxes.
      */
-    'store.sql.dsn'                 => 'sqlite:/path/to/sqlitedatabase.sq3',
+    'store.sql.dsn'                 => 'sqlite:/app/web/sites/default/files/sqlitedatabase.sq3',
 
     /*
      * The username and password to use when connecting to the database.
