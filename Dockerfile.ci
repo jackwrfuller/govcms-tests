@@ -43,5 +43,9 @@ RUN set -eux; \
 # Switch to govcms user
 USER govcms
 
+# Require the SimpleSAMLphp Auth module for Drupal using Composer
+RUN --mount=type=cache,target=/root/.composer/cache \
+    composer require 'drupal/simplesamlphp_auth:^4.0' --with-all-dependencies
+
 # Default command (can be overridden by docker-compose)
 CMD ["apache2-foreground"]
