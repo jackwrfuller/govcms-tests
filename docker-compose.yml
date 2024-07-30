@@ -11,7 +11,7 @@ services:
       # Source code volumes
       - modules:/app/web/modules/develop
       - themes:/app/web/themes/develop
-      - /var/www/html
+      - files:/app/web/sites/default/files
 
       # Test volumes
       - behat:/app/tests/behat
@@ -60,6 +60,7 @@ volumes:
       type: none
       o: bind
       device: ./app/themes
+  files:
   behat:
     driver: local
     driver_opts:
