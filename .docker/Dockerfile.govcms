@@ -24,6 +24,7 @@ RUN echo "hostname=govcms.localhost" > /etc/ssmtp/ssmtp.conf && \
 ENV SIMPLETEST_BASE_URL="http://localhost"
 ENV SIMPLETEST_DB='sqlite://sites/default/files/.ht.sqlite'
 # ENV SIMPLETEST_DB='mysql://drupal:drupal@mariadb/drupal'
+ENV SIMPLESAMLPHP_CONFIG_DIR=/app/custom/sso/config
 
 # Set the working directory to "/app/"
 WORKDIR /app
@@ -33,6 +34,29 @@ COPY --chown=govcms:govcms --from=govcms /app /app
 
 # Add the install.php file from the Drupal repository
 ADD --chown=govcms:govcms https://github.com/drupal/drupal/raw/10.2.x/core/install.php /app/web/core/install.php
+
+# Copy SSO configuration files
+COPY .docker/sso/config /app/custom/sso/config
+
+# Configure Apache for Drupal and append SSO configuration
+RUN set -eux; \
+    echo '<VirtualHost *:80>' > /etc/apache2/sites-available/000-default.conf; \
+    echo '    ServerAdmin webmaster@localhost' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '    DocumentRoot /app/web' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '    <Directory /app/web>' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '        Options Indexes FollowSymLinks' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '        AllowOverride All' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '        Require all granted' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '    </Directory>' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '    ErrorLog /dev/stderr' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '    CustomLog /dev/stdout combined' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '    Alias /simplesaml /app/vendor/simplesamlphp/simplesamlphp/public' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '    <Directory /app/vendor/simplesamlphp/simplesamlphp/public>' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '        Require all granted' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '        Options FollowSymLinks' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '        AllowOverride None' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '    </Directory>' >> /etc/apache2/sites-available/000-default.conf; \
+    echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default.conf
 
 # Switch to the govcms user
 USER govcms
@@ -63,6 +87,14 @@ WORKDIR /app
 
 # Switch to the govcms user
 USER govcms
+
+# Copy the startup script to the image
+COPY --chown=govcms:govcms .docker/scripts/startup.sh /app/startup.sh
+COPY --chown=govcms:govcms .docker/scripts/entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/startup.sh /app/entrypoint.sh
+
+# Set the entrypoint to the custom entrypoint script
+ENTRYPOINT ["/app/entrypoint.sh"]
 
 # Default command (can be overridden by docker-compose)
 CMD ["apache2-foreground"]

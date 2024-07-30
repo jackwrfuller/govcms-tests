@@ -23,8 +23,10 @@ services:
 
       # Configuration files
       - ./.docker/config/rector.php:/app/rector.php
+      - ./.docker/sso/config:/app/custom/sso/config
     environment:
       - GOVCMS_ENV=development
+      - SIMPLESAMLPHP_CONFIG_DIR=/app/custom/sso/config
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.govcms.rule=Host(`govcms.localhost`)"
@@ -33,7 +35,7 @@ services:
     networks:
       - internal
     ports:
-      - "0:80"
+      - "8888:80"
     develop:
       watch:
         - action: sync
