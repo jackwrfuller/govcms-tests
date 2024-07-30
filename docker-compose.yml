@@ -11,7 +11,7 @@ services:
       # Source code volumes
       - modules:/app/web/modules/develop
       - themes:/app/web/themes/develop
-      - /app/web/sites/default/files
+      - files:/app/web/sites/default/files
 
       # Test volumes
       - behat:/app/tests/behat
@@ -49,26 +49,6 @@ services:
         - action: rebuild
           path: composer.json
 
-  ##########################################
-  # sso: The SSO identity provider service
-  ##########################################
-  sso:
-    image: kristophjunge/test-saml-idp
-    container_name: sso
-    environment:
-      SIMPLESAMLPHP_SP_ENTITY_ID: 'http://localhost:8888'
-      SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE: 'http://localhost:8888/simplesaml/module.php/saml/sp/saml2-acs.php/test-sp'
-      SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE: 'http://localhost:8888/simplesaml/module.php/saml/sp/saml2-logout.php/test-sp'
-    ports:
-      - "8080:8080"
-      - "8443:8443"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.sso-http.rule=Host(`sso.govcms.localhost`)"
-      - "traefik.http.routers.sso-http.entrypoints=web"
-    networks:
-      - internal
-
 volumes:
   modules:
     driver: local
@@ -82,6 +62,7 @@ volumes:
       type: none
       o: bind
       device: ./app/themes
+  files:
   behat:
     driver: local
     driver_opts:
