@@ -12,18 +12,24 @@ use GovCMS\Tests\Integration\GovCMS\Baseline\Functional\GovCMSTestBase;
 class SimplesamlphpAuthTest extends GovCMSTestBase {
 
     /**
+     * Modules to enable during the test.
+     *
+     * This property specifies the modules that should be enabled for this test class.
+     * The testing framework ensures these modules are available and enabled before the tests are run.
+     * If the module is not available, the test will be skipped.
+     *
+     * @var array
+     */
+    public static $modules = ['simplesamlphp_auth'];
+
+    /**
      * {@inheritdoc}
      *
      * This method is called before each test method to set up the necessary environment.
      * It ensures a clean state by logging out any currently logged-in user, then creates
      * a new user with the necessary permissions and logs them in.
      */
-    #[\Override]
     protected function setUp(): void {
-        // Check if the simplesamlphp_auth module exists in the codebase.
-        if (!\Drupal::moduleHandler()->moduleExists('simplesamlphp_auth')) {
-            $this->markTestSkipped('The simplesamlphp_auth module is not available.');
-        }
         parent::setUp();
 
         // Log out any currently logged-in user to ensure a clean state.
@@ -33,7 +39,7 @@ class SimplesamlphpAuthTest extends GovCMSTestBase {
 
         // Create a user with specific permissions and log them in.
         $user = $this->drupalCreateUser([
-            'administer simplesamlphp_auth',
+            'administer simplesamlphp authentication',
         ]);
         $this->drupalLogin($user);
     }
