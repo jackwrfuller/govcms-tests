@@ -36,8 +36,13 @@ class TfaValidationTest extends TfaTestBase {
      */
     protected function setUp(): void {
         parent::setUp();
-        // HACK
+
+        // HACK: for some reason, some of the modules included by GovCMS 
+        // do not integrate with each other, and cause these tests to fail
+        // unless we first rebuild the drupal container before 
+        // calling drupalLogin().
         $this->drupalGet('/user');
+
         // create and log in as site admin user
         $this->adminUser = $this->drupalCreateUser([
             'admin tfa settings',
