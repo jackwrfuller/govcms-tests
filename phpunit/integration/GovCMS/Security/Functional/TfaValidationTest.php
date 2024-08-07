@@ -36,7 +36,8 @@ class TfaValidationTest extends TfaTestBase {
      */
     protected function setUp(): void {
         parent::setUp();
-
+        // HACK
+        $this->drupalGet('/user');
         // create and log in as site admin user
         $this->adminUser = $this->drupalCreateUser([
             'admin tfa settings',
